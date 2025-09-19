@@ -32,7 +32,7 @@ export function AppSidebar() {
     <Sidebar
       collapsible="icon"
     >
-      <SidebarContent className="bg-card">
+      <SidebarContent className="bg-sidebar">
         {/* Logo Section */}
         <div className="p-4 border-b">
           {!isCollapsed ? (
@@ -85,8 +85,8 @@ export function AppSidebar() {
                       className={({ isActive }) =>
                         `flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
                           isActive 
-                            ? "bg-primary text-primary-foreground font-medium" 
-                            : "hover:bg-accent text-foreground"
+                            ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" 
+                            : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
                         }`
                       }
                     >
@@ -103,7 +103,7 @@ export function AppSidebar() {
         {/* Settings at bottom */}
         <div className="mt-auto p-4 border-t">
           <SidebarMenuButton asChild>
-            <button className="flex items-center space-x-3 px-3 py-2 w-full rounded-lg hover:bg-accent transition-colors">
+            <button className="flex items-center space-x-3 px-3 py-2 w-full rounded-lg hover:bg-sidebar-accent/50 text-sidebar-foreground transition-colors">
               <Settings className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span>Configurações</span>}
             </button>
