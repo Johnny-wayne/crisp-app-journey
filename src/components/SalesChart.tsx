@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { ChefHat } from "lucide-react";
 
 const data = [
   { date: "10/06", sales: 45 },
@@ -60,6 +61,7 @@ export function SalesChart() {
             <CardContent className="p-4 text-center">
               <div className="text-lg font-bold">REI DO FRANGO</div>
               <div className="text-sm opacity-90">ÚLTIMO TÍTULO</div>
+              <ChefHat className="w-8 h-8 mx-auto mt-2" />
             </CardContent>
           </Card>
           
