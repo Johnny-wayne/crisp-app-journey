@@ -1,4 +1,4 @@
-import { Home, Trophy, Target, BarChart3, Settings, User } from "lucide-react";
+import { Home, Trophy, Target, BarChart3, Settings, User, Swords, ShoppingCart } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import {
@@ -6,6 +6,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -18,6 +19,14 @@ const items = [
   { title: "Metas", url: "/goals", icon: Target },
   { title: "Missões", url: "/missions", icon: Trophy },
   { title: "Disputa", url: "/competition", icon: BarChart3 },
+];
+
+const managerItems = [
+  { title: "Painel Gerente", url: "/manager", icon: Settings },
+  { title: "Ranking Regional", url: "/manager/ranking", icon: BarChart3 },
+  { title: "Disputas", url: "/manager/disputes", icon: Swords },
+  { title: "Gestão de Missões", url: "/manager/mission-management", icon: Target },
+  { title: "Gestão de Vendas", url: "/manager/sales", icon: ShoppingCart },
 ];
 
 export function AppSidebar() {
@@ -74,9 +83,39 @@ export function AppSidebar() {
 
         {/* Navigation */}
         <SidebarGroup>
+          <SidebarGroupLabel>Vendedor</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink 
+                      to={item.url} 
+                      end 
+                      className={({ isActive }) =>
+                        `flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                          isActive 
+                            ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" 
+                            : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
+                        }`
+                      }
+                    >
+                      <item.icon className="w-5 h-5 flex-shrink-0" />
+                      {!isCollapsed && <span>{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Manager Navigation */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Gerente</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {managerItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink 
