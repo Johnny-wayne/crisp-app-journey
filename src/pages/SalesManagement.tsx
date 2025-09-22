@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ShoppingCart, TrendingUp, Calendar, PieChart } from "lucide-react";
 import { PieChart as RechartsPieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { useState, useEffect } from "react";
 
 const pieData = [
   { name: "Açaí", value: 40, color: "#8b5cf6" },
@@ -13,6 +14,43 @@ const pieData = [
 ];
 
 export default function SalesManagement() {
+  const [selectedPeriod, setSelectedPeriod] = useState("hoje");
+  const [salesData, setSalesData] = useState({
+    vendas: { value: "R$ 12,36", items: "250 itens" },
+    crossSells: { value: "223 vendidos", meta: "Meta: 250" },
+    ticketMedio: { value: "R$ 78,58", vendas: "210 vendas" }
+  });
+
+  const [recentSales, setRecentSales] = useState([
+    { id: 1, product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "15 min atrás", status: "✓ Pronto" },
+    { id: 2, product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "23 min atrás", status: "✓ Pronto" },
+    { id: 3, product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "31 min atrás", status: "✓ Pronto" },
+    { id: 4, product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "45 min atrás", status: "✓ Pronto" }
+  ]);
+
+  useEffect(() => {
+    // Simular mudança de dados baseada no período
+    if (selectedPeriod === "semana") {
+      setSalesData({
+        vendas: { value: "R$ 86,52", items: "1.750 itens" },
+        crossSells: { value: "1.561 vendidos", meta: "Meta: 1.750" },
+        ticketMedio: { value: "R$ 82,15", vendas: "1.470 vendas" }
+      });
+    } else if (selectedPeriod === "mes") {
+      setSalesData({
+        vendas: { value: "R$ 372,40", items: "7.500 itens" },
+        crossSells: { value: "6.700 vendidos", meta: "Meta: 7.500" },
+        ticketMedio: { value: "R$ 85,30", vendas: "6.300 vendas" }
+      });
+    } else {
+      setSalesData({
+        vendas: { value: "R$ 12,36", items: "250 itens" },
+        crossSells: { value: "223 vendidos", meta: "Meta: 250" },
+        ticketMedio: { value: "R$ 78,58", vendas: "210 vendas" }
+      });
+    }
+  }, [selectedPeriod]);
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b bg-card">
@@ -22,8 +60,8 @@ export default function SalesManagement() {
             <p className="text-muted-foreground">Acompanhe vendas e performance da equipe</p>
           </div>
           <div className="flex items-center gap-3">
-            <Select defaultValue="hoje">
-              <SelectTrigger className="w-32">
+            <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+              <SelectTrigger className="w-40">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -45,8 +83,8 @@ export default function SalesManagement() {
               <ShoppingCart className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">R$ 12,36</div>
-              <p className="text-xs text-muted-foreground">250 itens</p>
+              <div className="text-2xl font-bold">{salesData.vendas.value}</div>
+              <p className="text-xs text-muted-foreground">{salesData.vendas.items}</p>
             </CardContent>
           </Card>
 
@@ -56,8 +94,8 @@ export default function SalesManagement() {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">223 vendidos</div>
-              <p className="text-xs text-muted-foreground">Meta: 250</p>
+              <div className="text-2xl font-bold">{salesData.crossSells.value}</div>
+              <p className="text-xs text-muted-foreground">{salesData.crossSells.meta}</p>
             </CardContent>
           </Card>
 
@@ -67,8 +105,8 @@ export default function SalesManagement() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">R$ 78,58</div>
-              <p className="text-xs text-muted-foreground">210 vendas</p>
+              <div className="text-2xl font-bold">{salesData.ticketMedio.value}</div>
+              <p className="text-xs text-muted-foreground">{salesData.ticketMedio.vendas}</p>
             </CardContent>
           </Card>
         </div>
@@ -84,20 +122,15 @@ export default function SalesManagement() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {[
-                  { product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "15 min atrás", category: "✓ Pronto" },
-                  { product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "23 min atrás", category: "✓ Pronto" },
-                  { product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "31 min atrás", category: "✓ Pronto" },
-                  { product: "Açaí Frapp melgaçuda 1kg", value: "R$ 25,00", time: "45 min atrás", category: "✓ Pronto" }
-                ].map((sale, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                {recentSales.map((sale) => (
+                  <div key={sale.id} className="flex items-center justify-between p-3 border rounded-lg">
                     <div>
                       <div className="font-medium text-sm">{sale.product}</div>
                       <div className="text-xs text-muted-foreground">{sale.time}</div>
                     </div>
                     <div className="text-right">
                       <div className="font-medium">{sale.value}</div>
-                      <div className="text-xs text-green-600">{sale.category}</div>
+                      <div className="text-xs text-green-600">{sale.status}</div>
                     </div>
                   </div>
                 ))}

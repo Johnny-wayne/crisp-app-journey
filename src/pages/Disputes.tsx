@@ -3,9 +3,58 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Swords, Calendar, Users } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { Plus, Swords, Calendar, Users, X } from "lucide-react";
+import { useState } from "react";
 
 export default function Disputes() {
+  const { toast } = useToast();
+  const [selectedStore, setSelectedStore] = useState("");
+  const [disputeType, setDisputeType] = useState("vendas");
+  const [activeDisputes, setActiveDisputes] = useState([
+    { id: 1, store1: "Barra Bonita", store2: "Vila Olímpia", value: "R$ 176.754,31", period: "31/05/2024 - 07/06/2024" },
+    { id: 2, store1: "Centro", store2: "Limeira", value: "R$ 156.904,81", period: "31/05/2024 - 07/06/2024" }
+  ]);
+
+  const stores = ["Barra Bonita", "Vila Olímpia", "Centro", "Limeira", "Interlagos", "Tatuapé", "São Caetano", "Diadema"];
+
+  const handleCreateDispute = () => {
+    if (!selectedStore) {
+      toast({
+        title: "Erro",
+        description: "Selecione uma loja para criar a disputa",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const newDispute = {
+      id: Date.now(),
+      store1: selectedStore,
+      store2: stores[Math.floor(Math.random() * stores.length)],
+      value: `R$ ${(Math.random() * 200000 + 100000).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+      period: `${new Date().toLocaleDateString('pt-BR')} - ${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('pt-BR')}`
+    };
+
+    setActiveDisputes([...activeDisputes, newDispute]);
+    setSelectedStore("");
+    setDisputeType("vendas");
+    
+    toast({
+      title: "Disputa criada!",
+      description: `Disputa entre ${newDispute.store1} e ${newDispute.store2} foi iniciada.`
+    });
+  };
+
+  const handleRemoveDispute = (id: number) => {
+    setActiveDisputes(activeDisputes.filter(d => d.id !== id));
+    toast({
+      title: "Disputa finalizada",
+      description: "A disputa foi movida para disputas finalizadas."
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b bg-card">
@@ -34,25 +83,34 @@ export default function Disputes() {
             <CardContent className="space-y-4">
               <div>
                 <Label htmlFor="store-selection">Selecionar Loja</Label>
-                <Input id="store-selection" placeholder="Digite para buscar..." />
+                <Select value={selectedStore} onValueChange={setSelectedStore}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Escolha uma loja" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {stores.map((store) => (
+                      <SelectItem key={store} value={store}>{store}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               
               <div>
-                <Label>Tipo da Pista</Label>
-                <div className="mt-2 space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <input type="radio" id="vendas" name="tipo" defaultChecked />
-                    <label htmlFor="vendas">Vendas</label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <input type="radio" id="cross-sell" name="tipo" />
-                    <label htmlFor="cross-sell">Cross-sell</label>
-                  </div>
-                </div>
+                <Label>Tipo da Disputa</Label>
+                <Select value={disputeType} onValueChange={setDisputeType}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="vendas">Vendas</SelectItem>
+                    <SelectItem value="cross-sell">Cross-sell</SelectItem>
+                    <SelectItem value="ticket-medio">Ticket Médio</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
-              <Button className="w-full">
-                Criar
+              <Button className="w-full" onClick={handleCreateDispute}>
+                Criar Disputa
               </Button>
             </CardContent>
           </Card>
@@ -67,37 +125,37 @@ export default function Disputes() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 border rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-medium text-green-600">Barra Bonita</h4>
-                      <p className="text-sm text-muted-foreground">VS</p>
-                      <h4 className="font-medium text-red-600">Vila Olímpia</h4>
+                {activeDisputes.map((dispute) => (
+                  <div key={dispute.id} className="p-4 border rounded-lg">
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-green-600">{dispute.store1}</h4>
+                        <p className="text-sm text-muted-foreground">VS</p>
+                        <h4 className="font-medium text-red-600">{dispute.store2}</h4>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">
+                          {dispute.value}
+                        </Badge>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleRemoveDispute(dispute.id)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
-                    <Badge variant="outline">
-                      R$ 176.754,31
-                    </Badge>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    31/05/2024 - 07/06/2024
-                  </div>
-                </div>
-
-                <div className="p-4 border rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-medium text-green-600">Centro</h4>
-                      <p className="text-sm text-muted-foreground">VS</p>
-                      <h4 className="font-medium text-red-600">Limeira</h4>
+                    <div className="text-xs text-muted-foreground">
+                      {dispute.period}
                     </div>
-                    <Badge variant="outline">
-                      R$ 156.904,81
-                    </Badge>
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    31/05/2024 - 07/06/2024
+                ))}
+                {activeDisputes.length === 0 && (
+                  <div className="text-center py-8 text-muted-foreground">
+                    Nenhuma disputa ativa no momento
                   </div>
-                </div>
+                )}
               </div>
             </CardContent>
           </Card>
