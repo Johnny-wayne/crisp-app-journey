@@ -47,11 +47,11 @@ export function SalesChart() {
             }} />
               <YAxis hide />
               <Tooltip contentStyle={{
-              backgroundColor: 'hsl(var(--card))',
-              border: '1px solid hsl(var(--border))',
+              backgroundColor: 'var(--card)',
+              border: '1px solid var(--border)',
               borderRadius: '6px'
             }} />
-              <Bar dataKey="sales" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="sales" fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
