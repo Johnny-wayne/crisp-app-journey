@@ -1,6 +1,7 @@
 import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function DashboardHeader() {
   return (
@@ -15,6 +16,7 @@ export function DashboardHeader() {
         </div>
         
         <div className="flex items-center space-x-2">
+          <ThemeToggle />
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10">
             <Bell className="w-5 h-5" />
           </Button>
