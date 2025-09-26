@@ -1,4 +1,4 @@
-import { Home, Trophy, Target, BarChart3, Settings, User, Swords, ShoppingCart, Layers } from "lucide-react";
+import { Home, Trophy, Target, BarChart3, Settings, User, Swords, ShoppingCart } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import {
@@ -19,7 +19,6 @@ const items = [
   { title: "Metas", url: "/goals", icon: Target },
   { title: "Missões", url: "/missions", icon: Trophy },
   { title: "Disputa", url: "/competition", icon: BarChart3 },
-  { title: "Demo Bootstrap", url: "/bootstrap-demo", icon: Layers },
 ];
 
 const managerItems = [
