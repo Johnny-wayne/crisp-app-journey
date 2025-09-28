@@ -15,6 +15,7 @@ import RegionalRanking from "./pages/RegionalRanking";
 import Disputes from "./pages/Disputes";
 import MissionManagement from "./pages/MissionManagement";
 import SalesManagement from "./pages/SalesManagement";
+import BootstrapDemo from "./pages/BootstrapDemo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
                 <Route path="/goals" element={<Goals />} />
                 <Route path="/missions" element={<MissionsPage />} />
                 <Route path="/competition" element={<Competition />} />
+                <Route path="/bootstrap-demo" element={<BootstrapDemo />} />
                 <Route path="/manager" element={<ManagerDashboard />} />
                 <Route path="/manager/ranking" element={<RegionalRanking />} />
                 <Route path="/manager/disputes" element={<Disputes />} />
