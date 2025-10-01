@@ -24,11 +24,11 @@ const competitorData = [
 ];
 
 const categoryData = [
-  { name: "Frangos", value: 45, color: "var(--chart-1)" },
-  { name: "Bovinos", value: 15, color: "var(--chart-2)" },
-  { name: "Legumes", value: 35, color: "var(--chart-3)" },
-  { name: "Suínos", value: 10, color: "var(--chart-4)" },
-  { name: "Tempero", value: 5, color: "var(--chart-5)" },
+  { name: "Frangos", value: 45, color: "hsl(var(--chart-1))" },
+  { name: "Bovinos", value: 15, color: "hsl(var(--chart-2))" },
+  { name: "Legumes", value: 35, color: "hsl(var(--chart-3))" },
+  { name: "Suínos", value: 10, color: "hsl(var(--chart-4))" },
+  { name: "Tempero", value: 5, color: "hsl(var(--chart-5))" },
 ];
 
 export default function Competition() {
@@ -58,7 +58,7 @@ export default function Competition() {
                     <BarChart data={myStoreData}>
                       <XAxis dataKey="date" axisLine={false} tickLine={false} />
                       <YAxis hide />
-                      <Bar dataKey="sales" fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="sales" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -83,7 +83,7 @@ export default function Competition() {
                     <BarChart data={competitorData}>
                       <XAxis dataKey="date" axisLine={false} tickLine={false} />
                       <YAxis hide />
-                      <Bar dataKey="sales" fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="sales" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>

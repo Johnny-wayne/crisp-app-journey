@@ -1,31 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { ChefHat } from "lucide-react";
-const data = [{
-  date: "10/06",
-  sales: 45
-}, {
-  date: "11/06",
-  sales: 52
-}, {
-  date: "12/06",
-  sales: 48
-}, {
-  date: "13/06",
-  sales: 35
-}, {
-  date: "14/06",
-  sales: 67
-}, {
-  date: "15/06",
-  sales: 78
-}, {
-  date: "16/06",
-  sales: 56
-}];
+
+const data = [
+  { date: "10/06", sales: 45 },
+  { date: "11/06", sales: 52 },
+  { date: "12/06", sales: 48 },
+  { date: "13/06", sales: 35 },
+  { date: "14/06", sales: 67 },
+  { date: "15/06", sales: 78 },
+  { date: "16/06", sales: 56 },
+];
+
 export function SalesChart() {
-  return <Card>
-      <CardHeader className="bg-zinc-900">
+  return (
+    <Card>
+      <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Título Do Gráfico</CardTitle>
           <div className="flex items-center space-x-4">
@@ -38,20 +28,29 @@ export function SalesChart() {
           <div className="text-2xl font-bold">123 Vendas</div>
         </div>
       </CardHeader>
-      <CardContent className="bg-zinc-900">
+      <CardContent>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
-              <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{
-              fontSize: 12
-            }} />
+              <XAxis 
+                dataKey="date" 
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 12 }}
+              />
               <YAxis hide />
-              <Tooltip contentStyle={{
-              backgroundColor: 'var(--card)',
-              border: '1px solid var(--border)',
-              borderRadius: '6px'
-            }} />
-              <Bar dataKey="sales" fill="var(--chart-2)" radius={[4, 4, 0, 0]} />
+              <Tooltip 
+                contentStyle={{
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
+                  borderRadius: '6px'
+                }}
+              />
+              <Bar 
+                dataKey="sales" 
+                fill="hsl(var(--chart-2))"
+                radius={[4, 4, 0, 0]}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -95,5 +94,6 @@ export function SalesChart() {
           </Card>
         </div>
       </CardContent>
-    </Card>;
+    </Card>
+  );
 }
